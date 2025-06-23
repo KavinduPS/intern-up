@@ -8,15 +8,18 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar, useColorScheme } from 'react-native';
 import QuizStack from './src/navigation/quizRoutes';
+import { QuizProvider } from './src/context/QuizContext';
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
 
   return (
-    <NavigationContainer>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <QuizStack />
-    </NavigationContainer>
+    <QuizProvider>
+      <NavigationContainer>
+        <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+        <QuizStack />
+      </NavigationContainer>
+    </QuizProvider>
   );
 }
 

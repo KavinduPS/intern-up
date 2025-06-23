@@ -1,17 +1,17 @@
-import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import React, { JSX, useState } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { JSX, useEffect, useState } from 'react';
+import { QandA, useQuiz } from '../context/QuizContext';
+
+type Option = {
+  id: number;
+  answer: string;
+};
 
 type Question = {
   id: string;
   question: string;
   type: string;
-  options: string[];
+  options: Option[];
 };
 
 interface QuestionProps {
@@ -19,29 +19,49 @@ interface QuestionProps {
 }
 
 const Question = ({ questions }: QuestionProps) => {
-  const [selectedAnswers, setSelectedAnswers] = useState<string[]>([]);
+  const { answers, saveAnswer } = useQuiz();
+  const [selected, setSelected] = useState<{ [id: string]: string[] }>({});
 
-  const handleAnswerPress = (answer: string) => {
-    if (selectedAnswers.includes(answer)) {
-      setSelectedAnswers(selectedAnswers.filter(item => item !== answer));
+  useEffect(() => {
+    console.log('Updated Answers:', answers);
+  }, [answers]);
+
+  const handleAnswerPress = (question: Question, answer: string) => {
+    const current = selected[question.id] || [];
+
+    if (question.type === 'multi') {
+      const updated = current.includes(answer)
+        ? current.filter(a => a !== answer)
+        : [...current, answer];
+      setSelected(prev => ({ ...prev, [question.id]: updated }));
+      saveAnswer({
+        qId: question.id,
+        question: question.question,
+        answer: updated,
+      });
     } else {
-      setSelectedAnswers([...selectedAnswers, answer]);
+      setSelected(prev => ({ ...prev, [question.id]: [answer] }));
+      saveAnswer({
+        qId: question.id,
+        question: question.question,
+        answer,
+      });
     }
   };
 
-  const renderAnswers = (options: string[]): JSX.Element[] => {
-    return options.map((option, index) => {
-      const isSelected = selectedAnswers.includes(option);
+  const renderAnswers = (question: Question): JSX.Element[] => {
+    return question.options.map(option => {
+      const isSelected = (selected[question.id] || []).includes(option.answer);
       return (
         <TouchableOpacity
-          key={index}
+          key={option.id}
           style={[styles.answer, isSelected && styles.answerSelected]}
-          onPress={() => handleAnswerPress(option)}
+          onPress={() => handleAnswerPress(question, option.answer)}
         >
           <Text
             style={[styles.answerText, isSelected && styles.answerTextChecked]}
           >
-            {option}
+            {option.answer}
           </Text>
           <View
             style={[styles.checkBox, isSelected && styles.checkboxSelected]}
@@ -62,16 +82,16 @@ const Question = ({ questions }: QuestionProps) => {
       <View style={styles.container}>
         <View style={styles.question}>
           <Text style={styles.questionText}>{question.question}</Text>
-          <View>{renderAnswers(question.options)}</View>
+          <View>{renderAnswers(question)}</View>
         </View>
       </View>
     );
   };
 
   return (
-    <ScrollView>
+    <View style={{ width: '100%' }}>
       {questions.map(question => renderQuestion(question))}
-    </ScrollView>
+    </View>
   );
 };
 
@@ -79,7 +99,7 @@ export default Question;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    width: '100%',
     alignItems: 'center',
     marginTop: 10,
   },
@@ -90,7 +110,7 @@ const styles = StyleSheet.create({
   },
   answer: {
     width: '100%',
-    height: 40,
+    minHeight: 40,
     borderWidth: 1,
     borderColor: '#CC0082',
     borderRadius: 10,
@@ -113,6 +133,7 @@ const styles = StyleSheet.create({
   answerText: {
     color: 'black',
     fontSize: 14,
+    width: '90%',
   },
   answerTextChecked: {
     color: 'white',
