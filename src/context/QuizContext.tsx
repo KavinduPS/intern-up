@@ -1,4 +1,6 @@
 import React, { createContext, ReactNode, useContext, useState } from 'react';
+import { SkillLevel } from '../services/roadmapService';
+import { SkillLevelType } from '../services/skillScoringConfig';
 
 export type QandA = {
   qId: string;
@@ -8,8 +10,10 @@ export type QandA = {
 
 type QuizContextType = {
   answers: QandA[];
+  skillLevel?: SkillLevel;
   saveAnswer: ({ qId, question, answer }: QandA) => void;
   resetQuiz: () => void;
+  saveSkillLevels: (skills: SkillLevel) => void;
 };
 
 export const QuizContext = createContext<QuizContextType | undefined>(
@@ -18,6 +22,7 @@ export const QuizContext = createContext<QuizContextType | undefined>(
 
 export const QuizProvider = ({ children }: { children: ReactNode }) => {
   const [answers, setAnswers] = useState<QandA[]>([]);
+  const [skillLevel, setSkillLevel] = useState<SkillLevel>();
 
   const saveAnswer = ({ qId, question, answer }: QandA) => {
     setAnswers(prev => {
@@ -25,13 +30,19 @@ export const QuizProvider = ({ children }: { children: ReactNode }) => {
       return [...filtered, { qId, question, answer }];
     });
   };
+  const saveSkillLevels = (skills: SkillLevel) => {
+    setSkillLevel(skills);
+    return skills;
+  };
 
   const resetQuiz = () => {
     setAnswers([]);
   };
 
   return (
-    <QuizContext.Provider value={{ answers, saveAnswer, resetQuiz }}>
+    <QuizContext.Provider
+      value={{ answers, skillLevel, saveAnswer, resetQuiz, saveSkillLevels }}
+    >
       {children}
     </QuizContext.Provider>
   );

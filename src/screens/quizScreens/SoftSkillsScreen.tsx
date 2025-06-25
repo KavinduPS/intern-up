@@ -15,7 +15,7 @@ type SoftSkillsNavigationProps = NativeStackNavigationProp<
 const SoftSkillsScreen = () => {
   const navigation = useNavigation<SoftSkillsNavigationProps>();
   const handleNextPress = (): void => {
-    navigation.navigate('SoftSkills');
+    navigation.navigate('SkillLevel');
   };
   return (
     <SafeAreaView style={{ flex: 1 }}>

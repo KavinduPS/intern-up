@@ -7,6 +7,8 @@ import DatabaseScreen from '../screens/quizScreens/DatabaseScreen';
 import DevOpsScreen from '../screens/quizScreens/DevOpsScreen';
 import GitScreen from '../screens/quizScreens/GitScreen';
 import SoftSkillsScreen from '../screens/quizScreens/SoftSkillsScreen';
+import SkillLevelScreen from '../screens/quizScreens/SkillLevelScreen';
+import RoadmapScreen from '../screens/quizScreens/RoadmapScreen';
 
 export type QuizStackParamList = {
   SelectRole: undefined;
@@ -17,6 +19,8 @@ export type QuizStackParamList = {
   Git: undefined;
   DevOps: undefined;
   SoftSkills: undefined;
+  SkillLevel: undefined;
+  Roadmap: undefined;
 };
 
 const Stack = createNativeStackNavigator<QuizStackParamList>();
@@ -63,6 +67,16 @@ const QuizStack = () => {
         name="SoftSkills"
         component={SoftSkillsScreen}
         options={{ title: 'Soft Skills' }}
+      />
+      <Stack.Screen
+        name="SkillLevel"
+        component={SkillLevelScreen}
+        options={{ title: 'My Skills Level' }}
+      />
+      <Stack.Screen
+        name="Roadmap"
+        component={RoadmapScreen}
+        options={{ title: 'My Roadmap' }}
       />
     </Stack.Navigator>
   );

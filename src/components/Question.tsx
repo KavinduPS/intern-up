@@ -22,10 +22,6 @@ const Question = ({ questions }: QuestionProps) => {
   const { answers, saveAnswer } = useQuiz();
   const [selected, setSelected] = useState<{ [id: string]: string[] }>({});
 
-  useEffect(() => {
-    console.log('Updated Answers:', answers);
-  }, [answers]);
-
   const handleAnswerPress = (question: Question, answer: string) => {
     const current = selected[question.id] || [];
 
