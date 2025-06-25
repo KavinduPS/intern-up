@@ -7,7 +7,7 @@ import { skillCategory } from '../../services/skillScoringConfig';
 import SkillResultCard from '../../components/SkillResultCard';
 import PrimaryButton from '../../components/PrimaryButton';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { QuizStackParamList } from '../../navigation/quizRoutes';
+import { QuizStackParamList } from '../../navigation/QuizRoutes';
 import { useNavigation } from '@react-navigation/native';
 
 type SkillLevelNavigationProps = NativeStackNavigationProp<

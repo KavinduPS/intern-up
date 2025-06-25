@@ -5,7 +5,7 @@ import { programmingFundamentals } from '../../constants/Questions';
 import NextButton from '../../components/NextButton';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { QuizStackParamList } from '../../navigation/quizRoutes';
+import { QuizStackParamList } from '../../navigation/QuizRoutes';
 import { useQuiz } from '../../context/QuizContext';
 
 type ProgrammingFundamentalsNavigationProps = NativeStackNavigationProp<

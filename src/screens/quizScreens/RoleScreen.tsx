@@ -4,7 +4,7 @@ import NextButton from '../../components/NextButton';
 import RoleSelection from '../../components/RoleSelection';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { QuizStackParamList } from '../../navigation/quizRoutes';
+import { QuizStackParamList } from '../../navigation/QuizRoutes';
 
 type RoleScreenNavigationProps = NativeStackNavigationProp<
   QuizStackParamList,
