@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { useQuiz } from '../../context/QuizContext';
 import { generateRoadmap, RoadmapType } from '../../services/roadmapService';
 import { roadmapSuggestions } from '../../services/roadmapSuggestions';
+import { skillCategory } from '../../services/skillScoringConfig';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const RoadmapScreen = () => {
   const { skillLevel } = useQuiz();
@@ -41,7 +43,9 @@ const RoadmapScreen = () => {
           ]}
         >
           <View style={styles.cardHeader}>
-            <Text style={styles.categoryText}>{item.category}</Text>
+            <Text style={styles.categoryText}>
+              {skillCategory[item.category as keyof typeof skillCategory]}
+            </Text>
             <View
               style={[
                 styles.categoryBadge,
@@ -76,27 +80,33 @@ const RoadmapScreen = () => {
   }
 
   return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      {/* Header */}
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Internship Readiness</Text>
-        <Text style={styles.headerSubtitle}>
-          Your personalized learning path
-        </Text>
-      </View>
+    <SafeAreaView style={{ flex: 1 }} edges={['left', 'right']}>
+      <ScrollView
+        style={styles.container}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContent}
+      >
+        {/* Header */}
+        <View style={styles.header}>
+          <Text style={styles.headerTitle}>Internship Readiness</Text>
+          <Text style={styles.headerSubtitle}>
+            Your personalized learning path
+          </Text>
+        </View>
 
-      {/* Roadmap Items */}
-      <View style={styles.roadmapContainer}>
-        {roadmap.map((item, index) => renderRoadmapItem(item, index))}
-      </View>
+        {/* Roadmap Items */}
+        <View style={styles.roadmapContainer}>
+          {roadmap.map((item, index) => renderRoadmapItem(item, index))}
+        </View>
 
-      {/* Footer */}
-      <View style={styles.footer}>
-        <Text style={styles.footerText}>
-          🎯 Complete all steps to boost your internship readiness!
-        </Text>
-      </View>
-    </ScrollView>
+        {/* Footer */}
+        <View style={styles.footer}>
+          <Text style={styles.footerText}>
+            🎯 Complete all steps to boost your internship readiness!
+          </Text>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
@@ -105,7 +115,9 @@ export default RoadmapScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F8FAFC',
+  },
+  scrollContent: {
+    paddingBottom: 100,
   },
   loadingContainer: {
     flex: 1,
@@ -150,7 +162,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   roadmapContainer: {
-    padding: 16,
+    paddingHorizontal: 16,
     paddingTop: 32,
   },
   roadmapItemContainer: {
@@ -244,7 +256,6 @@ const styles = StyleSheet.create({
     padding: 24,
     alignItems: 'center',
     backgroundColor: '#FFFFFF',
-    marginTop: 16,
     borderTopWidth: 1,
     borderTopColor: '#E2E8F0',
   },

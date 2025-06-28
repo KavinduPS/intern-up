@@ -7,9 +7,9 @@
 
 import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar, useColorScheme } from 'react-native';
-import QuizStack from './src/navigation/QuizRoutes';
 import { QuizProvider } from './src/context/QuizContext';
 import MainTabs from './src/navigation/MainTabs';
+import { View } from 'react-native';
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';

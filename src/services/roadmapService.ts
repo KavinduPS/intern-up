@@ -1,8 +1,5 @@
 import { QandA } from '../context/QuizContext';
-import {
-  roadmapSuggestions,
-  RoadmapSuggestionsType,
-} from './roadmapSuggestions';
+import { RoadmapSuggestionsType } from './roadmapSuggestions';
 import { SkillLevelType, skillScoringConfig } from './skillScoringConfig';
 
 export interface SkillLevel {

@@ -40,7 +40,7 @@ const SkillLevelScreen = () => {
   };
 
   return (
-    <SafeAreaView style={styles.safeArea} edges={['bottom', 'left', 'right']}>
+    <SafeAreaView style={styles.safeArea} edges={['left', 'right']}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <View style={styles.container}>
           {skillLevel && renderResults(skillLevel)}
@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: '5%',
     marginTop: 20,
+    paddingBottom: 100,
   },
   container: {
     backgroundColor: 'white',

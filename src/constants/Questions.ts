@@ -208,3 +208,11 @@ export {
   gitAndVersionControl,
   softSkills,
 };
+
+export const mockQuestions = [
+  'Can you introduce yourself?',
+  'What is the difference between let, var, and const in JavaScript?',
+  'What is the purpose of useEffect in React?',
+  'Explain what a REST API is.',
+  'How do you ensure your code is clean and maintainable?',
+];
